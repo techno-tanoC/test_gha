@@ -1,0 +1,39 @@
+name: Sample
+
+on:
+  pull_request:
+
+jobs:
+  changes:
+    name: Changes
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      packages: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            hoge: src/hoge
+            piyo: src/piyo
+            tyun: src/tyun
+
+  sample:
+    name: Sample
+    needs: changes
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        packages: ${{ fromJSON(needs.changes.outputs.packages) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set params
+        run:
+          num=yq .github/projects.yaml ".${{ matrix.packages }}.num"
+          echo "NUM=$num" >> $GITHUB_ENV
+
+      - run: echo $NUM
