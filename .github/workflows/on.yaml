@@ -16,10 +16,12 @@ jobs:
     outputs:
       packages: ${{ steps.filter.outputs.changes }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - uses: dorny/paths-filter@v3
         id: filter
         with:
-          base: staging
           filters: |
             hoge: src/hoge/**
             piyo: src/piyo/**
