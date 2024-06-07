@@ -22,7 +22,7 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: filter
         with:
-          base: staging
+          base: main
           filters: |
             hoge: src/hoge/**
             piyo: src/piyo/**
