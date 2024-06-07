@@ -1,7 +1,9 @@
-name: Sample
+name: 'On'
 
 on:
-  pull_request:
+  push:
+    branches:
+      - staging
     paths:
       - src/**
 
@@ -19,7 +21,6 @@ jobs:
         with:
           filters: |
             hoge: src/hoge/**
-            hoge2: src/hoge/**
             piyo: src/piyo/**
             tyun: src/tyun/**
 
